@@ -1,0 +1,26 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                           controllers.Application.index()
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+#Classes
+GET     /classes                    controllers.Classes.classes()
+GET     /classes/cls                controllers.Classes.index(q:String ?= "")
+GET     /allclasses                 controllers.Classes.getClasses()
+
+#Individuals
+GET     /individ                    controllers.Individuals.index(q:String ?= "")
+GET     /individuals                controllers.Individuals.individuals(q:String ?= "")
+GET     /stat                       controllers.Individuals.statisticsIndivid(q:String ?= "")
+
+#Statistics
+GET     /statistics                 controllers.Statistics.index(q:String ?= "")
+GET     /statistics-publications    controllers.Statistics.queryPubByYear()
+
+# Creating new instances
+#GET     /create/class               controllers.Classes.createNewClass(q:String ?= "")

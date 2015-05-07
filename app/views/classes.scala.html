@@ -1,0 +1,53 @@
+@(htmlClasses: String)
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@main("Class Hierarchy | Institute of AIFB of the Karlsruhe Univesity | Ontology-Driven Semantic Web Application") {
+
+<div class="row">
+    <div class="col-md-4 classes">
+        <div class="mainclasses" data-toggle="popover" data-trigger="focus" data-content="Please select a class to browse data">
+            @if(!htmlClasses.isEmpty) {
+                <h4>Class Hierarchy</h4>
+                @Html(htmlClasses)
+            }
+            <div class="unavailable" style="display:none;"></div>
+        </div>
+    </div>
+    <div class="col-md-8 individs">
+        <img style="display:none;" id="loaderInds" src="@routes.Assets.at("images/ajax-loader.gif")" />
+        <div class="individuals">
+            <ul><li class='noData'>Please select a class from the right, to browse ontology data</li></ul>
+        </div>
+    </div>
+</div>
+
+
+<script language="JavaScript">
+    $(document).ready(function() {
+
+        $(".level1").show();
+
+        // $('.mainclasses').popover('show');
+
+        $('.cls').click(function(e){
+            e.preventDefault();
+
+            // $('.mainclasses').popover('hide');
+
+            // show subclasses if not yet opened
+            if(!$(this).parent( "li" ).hasClass('selected')) {
+                $(this).parent( "li" ).find('ul').first().addClass('toggled').slideToggle();
+            } 
+
+            var value = $(this).attr('href');
+
+            getIndividuals($(this),value);
+
+        });
+
+    });
+</script>
+
+}

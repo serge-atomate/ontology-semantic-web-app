@@ -1,0 +1,227 @@
+@(dataItm: List[String], objItm: List[String], name: String, chartData: Map[String, Integer])
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@main(name+" | Institute of AIFB of the Karlsruhe Univesity | Ontology-Driven Semantic Web Application") {
+
+<div class="individ">
+    @if(!name.isEmpty) {
+        <h3>@name</h3>
+    }
+
+    @if(!dataItm.isEmpty) {
+        <div class="row dataProperties">
+            <div class="col-md-12">
+                <ul class="list-unstyled">
+                        <!--Data Properties-->
+                        @for(value <- dataItm) {
+                            @Html(value)
+                            <!--<li class="lst"><a class="cls" href='/individ?q=@value'>@value</a></li>-->
+                        }
+                </ul>
+            </div>
+        </div>
+    }
+
+    @if(!objItm.isEmpty) {
+        <div class="row objectsProperties">
+            <div class="col-md-12">
+                <ul class="list-unstyled">
+                        <!--Object Properties-->
+                        @for(value <- objItm) {
+                            @Html(value)
+                        }
+                </ul>
+            </div>
+        </div>
+    }
+
+    @if(!chartData.isEmpty) {
+        <div class="row">
+            <div class="col-md-12">
+
+                <h4>Charts: "Number of Publications by year"</h4>
+
+                <ul id="chartType" class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#pie" id="pie-tab" role="tab" data-toggle="tab" aria-controls="pie" aria-expanded="true">Pie Chart</a></li>
+                    <li role="presentation"><a href="#bar" role="tab" id="bar-tab" data-toggle="tab" aria-controls="bar">Bar Chart</a></li>
+                    <li role="presentation"><a href="#polar" role="tab" id="polar-tab" data-toggle="tab" aria-controls="polar">Polar Area Chart</a></li>
+                    <li role="presentation"><a href="#radar" role="tab" id="radar-tab" data-toggle="tab" aria-controls="radar">Radar Chart</a></li>
+                </ul>
+
+                <div id="myTabContent" class="tab-content">
+                    <div role="tabpanel" class="tab-pane in active" id="pie" aria-labelledby="pie-tab">
+                        <div id="canvas-holder"><canvas id="chart-area" width="300" height="300"/></div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="bar" aria-labelledby="bar-tab">
+                        <div id="canvas-holder"><canvas id="chart-area2" width="400" height="300"/></div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="polar" aria-labelledby="polar-tab">
+                        <div id="canvas-holder"><canvas id="chart-area3" width="300" height="300"/></div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="radar" aria-labelledby="radar-tab">
+                        <div id="canvas-holder"><canvas id="chart-area4" width="300" height="300"/></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+
+</div>
+
+
+<script language="JavaScript">
+    $(document).ready(function() {
+        $(".pagination a").click(function(e) {
+            e.preventDefault();
+
+            $(this).parent( "li" ).parent( "ul" ).find('li').removeClass("active");
+            $(this).parent( "li" ).addClass('active');
+
+            var href = $(this).attr('href');
+            $(this).parent( "li" ).parent( "ul" ).parent("nav").parent("li.lst").find("div").hide();
+            $(this).parent( "li" ).parent( "ul" ).parent("nav").parent("li.lst").find("div."+href).show();
+
+            var classAccess = $(this).parent( "li" ).parent( "ul" ).parent("nav").attr("class");
+            var url = document.URL;
+
+            if(url.indexOf('#') != -1) {
+                window.location.href = url.replace(url.substr(url.lastIndexOf('#') + 1), ""+classAccess);
+            } else {
+                window.location.href = url+"#"+classAccess;
+            }
+        });
+
+
+
+
+        // Initiate Charts
+        var data = [];
+        var labelsArray = [];
+        var dataArray = [];
+
+        var colors = [
+            "#e53935", "#43A047", "#1E88E5", "#FDD835", "#F4511E", "#6D4C41", "#3949AB", "#D81B60", "#8E24AA", "#00ACC1", "#7CB342", "#FFB300", "#546E7A", "#1E88E5", "#C0CA33", "#757575", "#ff1744", "#2979FF", "#FFC400", "#FF3D00"
+        ];
+
+        var highlightColors = [
+            "#ef9a9a", "#81C784", "#64B5F6", "#FFF176", "#FF8A65", "#A1887F", "#7986CB", "#F06292", "#BA68C8", "#4DD0E1", "#AED581", "#FFD54F", "#90A4AE", "#64B5F6", "#DCE775", "#BDBDBD", "#ff8a80", "#82B1FF", "#FFE57F", "#FF9E80"
+        ];
+
+        var index = 1;
+        @if(!chartData.isEmpty) {
+            @for((key,value) <- chartData) {
+                index = Math.floor(Math.random() * 20) + 1;
+                data.push({ value: @value, color: colors[index], highlight: highlightColors[index], label: '@key' });
+                //console.log(index);
+                dataArray.push(@value);
+                labelsArray.push("@key");
+            }
+        }
+
+        var ctx = document.getElementById("chart-area").getContext("2d");
+        var ctx2 = document.getElementById("chart-area2").getContext("2d");
+        var ctx3 = document.getElementById("chart-area3").getContext("2d");
+        var ctx4 = document.getElementById("chart-area4").getContext("2d");
+
+        var options = {
+            legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%> (<%=segments[i].value%>)<%}%></li><%}%></ul>"
+        }
+
+        var helpers = Chart.helpers;
+        window.chart = new Chart(ctx).Pie(data, options);
+
+        var legendHolder = document.createElement('div');
+        legendHolder.innerHTML = window.chart.generateLegend();
+
+        // Include a html legend template after the module doughnut itself
+        helpers.each(legendHolder.firstChild.childNodes, function (legendNode, index) {
+            helpers.addEvent(legendNode, 'mouseover', function () {
+                var activeSegment = window.chart.segments[index];
+                activeSegment.save();
+                window.chart.showTooltip([activeSegment]);
+                activeSegment.restore();
+            });
+        });
+        helpers.addEvent(legendHolder.firstChild, 'mouseout', function () {
+            window.chart.draw();
+        });
+
+        window.chart.chart.canvas.parentNode.parentNode.appendChild(legendHolder.firstChild);
+
+        var data2 = {
+            labels: labelsArray,
+            datasets: [
+               /* {
+                    label: "My First dataset",
+                    fillColor: "rgba(220,220,220,0.5)",
+                    strokeColor: "rgba(220,220,220,0.8)",
+                    highlightFill: "rgba(220,220,220,0.75)",
+                    highlightStroke: "rgba(220,220,220,1)",
+                    data: [65, 59, 80, 81, 56, 55, 40]
+                }, */
+                {
+                    label: "My Second dataset",
+                    fillColor: "rgba(151,187,205,0.5)",
+                    strokeColor: "rgba(151,187,205,0.8)",
+                    highlightFill: "rgba(151,187,205,0.75)",
+                    highlightStroke: "rgba(151,187,205,1)",
+                    data: dataArray
+                }
+            ]
+        };
+
+        $('#chartType a').click(function (e) {
+            e.preventDefault();
+            var tabId = $(this).attr('id');
+            $(this).tab('show');
+
+            if (tabId == "bar-tab") {
+                window.chart = new Chart(ctx2).Bar(data2, options);
+                return false;
+            }
+            else if (tabId == "polar-tab") {
+                window.chart = new Chart(ctx3).PolarArea(data, options);
+                if($("#polar").find(".polararea-legend")) {
+                    console.log($("#polar").find(".polararea-legend"));
+                    return false;
+                }
+            }
+            else if (tabId == "radar-tab") {
+                window.chart = new Chart(ctx4).Radar(data2, options);
+                return false;
+            }
+            else if (tabId == "pie-tab") {
+                window.chart = new Chart(ctx).Pie(data, options);
+                if($("#pie.tab-pane").find(".pie-legend")) {
+                    return false;
+                }
+            }
+
+            var legendHolder = document.createElement('div');
+            legendHolder.innerHTML = window.chart.generateLegend();
+
+            // Include a html legend template after the module doughnut itself
+            helpers.each(legendHolder.firstChild.childNodes, function (legendNode, index) {
+                helpers.addEvent(legendNode, 'mouseover', function () {
+                    var activeSegment = window.chart.segments[index];
+                    activeSegment.save();
+                    window.chart.showTooltip([activeSegment]);
+                    activeSegment.restore();
+                });
+            });
+            helpers.addEvent(legendHolder.firstChild, 'mouseout', function () {
+                window.chart.draw();
+            });
+
+            window.chart.chart.canvas.parentNode.parentNode.appendChild(legendHolder.firstChild);
+
+        });
+
+
+    });
+</script>
+
+}
