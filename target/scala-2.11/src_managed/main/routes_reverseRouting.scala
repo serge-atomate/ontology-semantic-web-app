@@ -1,6 +1,6 @@
-// @SOURCE:/Users/serge/Htdocs/Project-OWL/conf/routes
+// @SOURCE:/Users/serge/Htdocs/ontology-semantic-web-app/conf/routes
 // @HASH:a3cc8b8f9ba9404762df6cf3e02ee7fb4efe0a2e
-// @DATE:Mon May 18 16:21:54 CEST 2015
+// @DATE:Mon May 18 16:41:49 CEST 2015
 
 import Routes.{prefix => _prefix, defaultPrefix => _defaultPrefix}
 import play.core._

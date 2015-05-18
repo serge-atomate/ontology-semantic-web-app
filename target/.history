@@ -148,3 +148,6 @@ run
 exit
 run
 exit
+clean
+run
+exit

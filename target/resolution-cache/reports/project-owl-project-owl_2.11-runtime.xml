@@ -7,7 +7,7 @@
 		revision="1.0-SNAPSHOT"
 		conf="runtime"
 		confs="compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, sources, docs, pom, scala-tool"
-		date="20150413134410"/>
+		date="20150518164138"/>
 	<dependencies>
 		<module organisation="org.json" name="org.json">
 			<revision name="chargebee-1.0" status="release" pubdate="20120225091705" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.json.org/java/index.html" downloaded="false" searched="false" default="false" conf="default(compile), default, compile, runtime, master" position="68">
