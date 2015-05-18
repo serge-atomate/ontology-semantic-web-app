@@ -2,7 +2,9 @@
 Ontology-Driven Software Development in the Context of the Semantic Web
 
 Follow the instructions from the link bellow to install Play Framework to run the application:
-This application is running on verion 2.0.4 !!!
+
+This application is running on version 2.0.4 !!!
+
 https://www.playframework.com/documentation/2.3.x/Installing
 
 To start application, use activator command:
