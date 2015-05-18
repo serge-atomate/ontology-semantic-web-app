@@ -131,11 +131,9 @@ public class Individuals extends Controller {
 
             Map<String, Integer> chartData = new TreeMap<String, Integer>();
             // get Charts Data
-//            if(individual.contains("Personen")) {
-                HashMap<String, Integer> chart = new HashMap<String, Integer>();
-                chart = Ontology.queryPublicationsbyYearIndivid(individual);
-                chartData = new TreeMap<String, Integer>(chart);
-//            }
+            HashMap<String, Integer> chart = new HashMap<String, Integer>();
+            chart = Ontology.queryPublicationsbyYearIndivid(individual);
+            chartData = new TreeMap<String, Integer>(chart);
 
             return ok(views.html.individ.render(datas, objects, name, chartData));
 
@@ -164,11 +162,11 @@ public class Individuals extends Controller {
 
 
     public static Result individuals(String cls) throws Exception  {
-        System.out.println("Cls: " + cls);
+        // System.out.println("Cls: " + cls);
 
         if(!cls.equals("owl:Nothing")) {
             List<String> results = new ArrayList<String>();
-//        String results = "";
+            
             results = Ontology.classesIndividuals(cls);
 
             String jsonObj = "{\"individuals\" : ";

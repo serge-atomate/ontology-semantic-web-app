@@ -39,6 +39,8 @@
 <script language="JavaScript">
     $(document).ready(function() {
 
+        $(".statistics").addClass("active");
+
         var data = [];
 
         var colors = [
@@ -129,7 +131,7 @@
             if (tabId == "bar-tab") {
                 window.chart = new Chart(ctx2).Bar(data2);
                 if($("#polar").find(".polararea-legend")) {
-                    console.log($("#polar").find(".polararea-legend"));
+                    // console.log($("#polar").find(".polararea-legend"));
                     return false;
                 }
             }

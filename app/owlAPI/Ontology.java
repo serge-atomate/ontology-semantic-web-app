@@ -77,7 +77,7 @@ public class Ontology {
     // ==================== Get All Classes ============================== //
     public static JSONObject rootClasses(String classItem) throws Exception {
 
-        System.out.println("Class: " + classItem);
+        // System.out.println("Class: " + classItem);
 
         ArrayList<String> jsonObj = new ArrayList<String>();
         TreeMap<String, String> hierarchic = new TreeMap<String, String>();
@@ -213,11 +213,11 @@ public class Ontology {
 
         OWLDataProperty hasName = fac.getOWLDataProperty(IRI.create("http://swrc.ontoware.org/ontology#name"));
 
-        System.out.println("Instances of class: ");
+        // System.out.println("Instances of class: ");
         int i = 0;
         for (OWLNamedIndividual ind : individuals) {
             i++;
-            System.out.println(i+".    " + ind);
+            // System.out.println(i+".    " + ind);
             if(i>200) {
                 break;
             }
@@ -225,7 +225,7 @@ public class Ontology {
             //======================= Print name of the individual
             for (OWLLiteral l : reasoner.getDataPropertyValues(ind, hasName)) {
                 if (l.getDatatype().isString()) {
-                    System.out.println("Asserted value: " + l.getLiteral());
+                    // System.out.println("Asserted value: " + l.getLiteral());
 //                    jsonObj.add("\""+l.getLiteral()+"\"");
                     jsonObj.add("{\"id\":\""+ind.toString().replace("<http://www.aifb.uni-karlsruhe.de/", "").replace(">", "")+"\", \"name\":\""+l.getLiteral()+"\"}");
 //                    {"firstName":"John", "lastName":"Doe"},
@@ -404,7 +404,7 @@ public class Ontology {
             objStr += StringEscapeUtils.unescapeJava(value) + "\"¡";
         }
         json.add("\"objects\": [ {"+objStr.substring(0, objStr.length()-1)+"} ] }");
-        System.out.println(json);
+        // System.out.println(json);
 
         return json;
     }
@@ -426,7 +426,7 @@ public class Ontology {
         for (String property : listDataProperty) {
             for (OWLLiteral l : reasoner.getDataPropertyValues(individ, fac.getOWLDataProperty(IRI.create("http://swrc.ontoware.org/ontology#"+property)))) {
                 if (l.getDatatype().isString() && !l.getLiteral().equals("")) {
-                    System.out.println("Asserted value: |" + l.getLiteral()+"|");
+                    // System.out.println("Asserted value: |" + l.getLiteral()+"|");
                     name.add(StringEscapeUtils.unescapeJava(l.getLiteral().replace("\n", " ").replace("\r", " ")));
                 }
             }
@@ -626,7 +626,7 @@ public class Ontology {
 
     // ======================== Statistics for Individ get Publications by Year ========================
     public static HashMap queryPublicationsbyYearIndivid(String individual) throws Exception {
-        System.out.println("Individ: " + individual);
+        // System.out.println("Individ: " + individual);
 
         OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
 
@@ -673,7 +673,7 @@ public class Ontology {
 
             }
         }
-        System.out.println("Total: "+i);
+        // System.out.println("Total: "+i);
 
         return years;
     }
@@ -725,7 +725,7 @@ public class Ontology {
                 System.out.println("Query has no solution.\n");
             }
             else {
-                System.out.println(result);
+                // System.out.println(result);
                 String s = result.toString();
                 // Get Results and split by Class name
                 Pattern p = Pattern.compile("([A-Z])\\w+");

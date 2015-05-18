@@ -46,7 +46,7 @@ public class Statistics extends Controller {
         results = Ontology.queryPublicationsbyYear();
         // sort results by year asceding
         Map<String, Integer> sortedResults = new TreeMap<String, Integer>(results);
-        System.out.println(sortedResults);
+        // System.out.println(sortedResults);
 
         return ok(views.html.publications.render(sortedResults));
     }

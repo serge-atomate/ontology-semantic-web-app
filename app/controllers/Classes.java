@@ -17,7 +17,7 @@ import views.html.*;
 public class Classes extends Controller {
 
     public static Result index(String cls) throws Exception  {
-        System.out.println("Cls: " + cls);
+        // System.out.println("Cls: " + cls);
         if(!cls.equals("owl:Nothing")) {
 //            List<String> results = new ArrayList<String>();
             JSONObject results = new JSONObject();
