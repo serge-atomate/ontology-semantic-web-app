@@ -1,6 +1,6 @@
 // @SOURCE:/Users/serge/Htdocs/ontology-semantic-web-app/conf/routes
 // @HASH:a3cc8b8f9ba9404762df6cf3e02ee7fb4efe0a2e
-// @DATE:Mon May 18 16:41:49 CEST 2015
+// @DATE:Tue May 19 16:17:15 CEST 2015
 
 
 import play.core._
