@@ -91,7 +91,7 @@ Seq[Any](format.raw/*1.48*/("""
 
         """),format.raw/*65.9*/("""$("#selectedClass").on('change', function () """),format.raw/*65.54*/("""{"""),format.raw/*65.55*/("""
             """),format.raw/*66.13*/("""if($("#selectedClass").val()!="") """),format.raw/*66.47*/("""{"""),format.raw/*66.48*/("""
-                """),format.raw/*67.17*/("""window.location.replace("http://localhost:9000/statistics?q="+$("#selectedClass").val());
+                """),format.raw/*67.17*/("""window.location.replace("http://xen9.helios.atomate.net:9000/statistics?q="+$("#selectedClass").val());
             """),format.raw/*68.13*/("""}"""),format.raw/*68.14*/("""
         """),format.raw/*69.9*/("""}"""),format.raw/*69.10*/(""");
 
